@@ -1,5 +1,15 @@
-import React, { useState } from "react";
+//\\ بسم الله الرحمن الرحيم //\\
 
+import React, { useState } from "react";
+//myimports
+// Go to Login.js page and import the login function from api/auth.js.
+import { login } from "../api/auth"; //imported
+import { useMutation } from "@tanstack/react-query";
+//myimports
+//
+// Use the useMutation hook with the login function and pass it userInfo.
+// Call your mutate function inside the handleFormSubmit function!
+//
 const Login = () => {
   const [userInfo, setUserInfo] = useState({});
 
@@ -7,9 +17,20 @@ const Login = () => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  //mywork
+  // Use the useMutation hook with the login function and pass it userInfo.
+  // Call your mutate function inside the handleFormSubmit function!
+  const { mutate } = useMutation({
+    mutationFn: () => login(userInfo),
+    // const mutation = useMutation({ mutationKey: ['addTodo'] })
+    mutationKey: ["login"],
+  });
+  //mywork
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Add login logic here
+    mutate(); //called
   };
 
   return (
@@ -53,6 +74,18 @@ const Login = () => {
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              //mywork
+              // Use the useMutation hook with the login function and
+              // pass it userInfo.
+
+              // onClick={} by arrow function login
+              // wont be called unless a click happens
+              //
+              //{login()} will call the function infinitly
+              //
+              //onclick={login} will be called on click only
+              // api/auth.js
+              //mywork
             >
               Login
             </button>

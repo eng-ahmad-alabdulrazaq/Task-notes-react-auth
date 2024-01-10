@@ -1,7 +1,59 @@
-import React, { useState } from "react";
+//\\ بسم الله الرحمن الرحيم //\\
 
+import React, { useContext, useState } from "react";
+//myimports
+
+import { register } from "../api/auth";
+import { useMutation } from "@tanstack/react-query";
+import UserContext from "../context/UserContext";
+
+//myimports
+
+// Go to Register.js page and import register function from api/auth.js.
+//
+// Use the useMutation hook with the register function and pass it
+// userInfo
+//
+// Call your mutate function inside the handleFormSubmit function!
+//
+// Now go to auth.js in the api folder and add the following code
+// to your register function:
+// const formData = new FormData();
+// for (const key in userInfo) formData.append(key, userInfo[key]);
+//
+// Then, replace the userInfo inside the post request with formData.
+//
+// This step will enable you to send files with the request
+// Login
+// Create a function login that takes userInfo as a parameter and
+// send a post request to the login end-point with the userInfo .
+// (This step is already done)
+// Go to Login.js page and import the login function from api/auth.js.
+// Use the useMutation hook with the login function and pass it userInfo.
+// Call your mutate function inside the handleFormSubmit function!
+// ========================
+//
+
+//register starts with an uppercase, React component names must start
+// with an uppercase letter.
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [user, setUser] = useContext(UserContext); //used and given
+
+  //register;
+  //just write this to importas it was exported as a function
+  // useMutation;
+  //just write this to import
+  //
+  // Use the useMutation hook with the register function and pass it
+  // userInfo
+  // useMutation
+  const { mutate } = useMutation({
+    mutationKey: ["register"],
+    mutationFn: () => register(userInfo), //take note why arrowfn?
+    onSuccess: () => setUser(true),
+  });
+  //
 
   const handleChange = (e) => {
     if (e.target.name === "image") {
@@ -14,6 +66,13 @@ const Register = () => {
   const handleFormSubmit = (e) => {
     // e.preventDefault();
     // Add register logic here
+
+    //mywork
+    // Call your mutate function inside the handleFormSubmit function!
+    e.preventDefault(); //why is this used?
+
+    mutate(); //called it
+    //mywork
   };
 
   return (
