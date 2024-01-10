@@ -1,10 +1,11 @@
 //\\ بسم الله الرحمن الرحيم //\\
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 //myimports
 // Go to Login.js page and import the login function from api/auth.js.
 import { login } from "../api/auth"; //imported
 import { useMutation } from "@tanstack/react-query";
+import UserContext from "../context/UserContext";
 //myimports
 //
 // Use the useMutation hook with the login function and pass it userInfo.
@@ -16,12 +17,15 @@ const Login = () => {
   const handleChange = (e) => {
     setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const [user, setUser] = useContext(UserContext); //used and given
 
   //mywork
   // Use the useMutation hook with the login function and pass it userInfo.
   // Call your mutate function inside the handleFormSubmit function!
   const { mutate } = useMutation({
     mutationFn: () => login(userInfo),
+    onSuccess: () => setUser(true),
+
     // const mutation = useMutation({ mutationKey: ['addTodo'] })
     mutationKey: ["login"],
   });
